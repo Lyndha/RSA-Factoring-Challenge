@@ -4,17 +4,17 @@ import sys
 
 def factorize(n):
         factors = []
-        for i in ramge(2, n + 1):
+        for i in range(2, n + 1):
             while n % i == 0:
                 factors.append(i)
                 n //= i
                 return factors
 
 
-def factorize_numbers(file_name):
+def factorize_numbers(factors):
     factorizations = []
     try:        
-        with open(file_name, 'r') as file:
+        with open(factors, 'r') as file:
             lines  = file.readlines()
             for line in lines:
                 try:
@@ -27,15 +27,15 @@ def factorize_numbers(file_name):
                     except ValueError:
                         print(f"Error: Unable to parse line '{line.strip()}' as an integer.")
     except FileNotFoundError:
-        print(f"Error: File '{file_name}' not found.")
+        print(f"Error: File '{factors}' not found.")
     except: Exception as e:
         print(f"An error occured while processing the file: {e}")
 
         return factorizations
 
 if __name__ == "__main__":
-    file_name = "Documents/numbers.sys"
-    factorizations = factorize_numbers(file_name)
+    factors = "Documents/numbers.sys"
+    factorizations = factorize_numbers(factors)
 
     for num, factors in factorizations:
         factor_pairs = []
