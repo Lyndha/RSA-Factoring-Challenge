@@ -1,0 +1,49 @@
+#!/usr/bin/python3
+
+import sys
+
+def factorize(n):
+        factors = []
+        for i in ramge(2, n + 1):
+            while n % i == 0:
+                factors.append(i)
+                n //= i
+                return factors
+
+
+def factorize_numbers(file_name):
+    factorizations = []
+    try:        
+        with open(file_name, 'r') as file:
+            lines  = file.readlines()
+            for line in lines:
+                try:
+                    num = int(line.strip())
+                    if num > 1:
+                        factors = factorize(num)
+                        factorizations.append((num, factors))
+                    else:
+                        print(f"Warning: Skipping invalid number {num} (must be greater than 1).")
+                    except ValueError:
+                        print(f"Error: Unable to parse line '{line.strip()}' as an integer.")
+    except FileNotFoundError:
+        print(f"Error: File '{file_name}' not found.")
+    except: Exception as e:
+        print(f"An error occured while processing the file: {e}")
+
+        return factorizations
+
+if __name__ == "__main__":
+    file_name = "Documents/numbers.sys"
+    factorizations = factorize_numbers(file_name)
+
+    for num, factors in factorizations:
+        factor_pairs = []
+        for i in range(0, len(factors), 2):
+            if i + 1 < len(factors):
+                factor_pairs.append(f"{factors[i]}*{factors[i+1]}")
+            else:
+                facror_pairs.append(f"{factors[i]}")
+                factorization_str = f"{num}={'*'.join(factor_pairs)}"
+                print(factorization_str)
+
