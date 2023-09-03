@@ -1,49 +1,53 @@
 #!/usr/bin/python3
-
+"""
+Factorize as many numbers as possible into a product of two smaller numbers.
+    Usage: factors <file>
+        where <file> is a file containing natural numbers to factor.
+        One number per line
+        You can assume that all lines will be valid natural numbers\
+                greater than 1
+        You can assume that there will be no empy line, and no space\
+                before and after the valid number
+        The file will always end with a new line
+    Output format: n=p*q
+        one factorization per line
+        p and q don’t have to be prime numbers
+        See example
+    You can work on the numbers of the file in the order of your choice
+    Your program should run without any dependency: You will not be ablei\
+            to install anything on the machine we will run your program on
+    Time limit: Your program will be killed after 5 seconds\
+            if it hasn’t finish
+    Push all your scripts, source code, etc… to your repository
+"""
+# library to get arguments
 import sys
 
-def factorize(n):
-        factors = []
-        for i in range(2, n + 1):
-            while n % i == 0:
-                factors.append(i)
-                n //= i
-                return factors
+
+# fn unpack number factorial
+def factors():
+    """
+    function factors to search file to convert number and format n=p*q
+    """
+    try:
+        revfile = sys.argv[1]
+        with open(revfile) as f:
+            for revnumber in f:
+                revnumber = int(revnumber)
+                if revnumber % 2 == 0:
+                        print("{}={}*{}".format(revnumber, revnumber // 2, 2))
+                        continue
+                i = 3
+                while i < revnumber // 2:
+                    if revnumber % i == 0:
+                        print("{}={}*{}".format(revnumber, revnumber // i, i))
+                        break
+                    i = i + 2
+                if i == (revnumber // 2) + 1:
+                    print("{}={}*{}".format(revnumber, revnumber, 1))
+    except (IndexError):
+        pass
 
 
-def factorize_numbers(factors):
-    factorizations = []
-    try:        
-        with open(factors, 'r') as file:
-            lines  = file.readlines()
-            for line in lines:
-                try:
-                    num = int(line.strip())
-                    if num > 1:
-                        factors = factorize(num)
-                        factorizations.append((num, factors))
-                    else:
-                        print(f"Warning: Skipping invalid number {num} (must be greater than 1).")
-                    except ValueError:
-                        print(f"Error: Unable to parse line '{line.strip()}' as an integer.")
-    except FileNotFoundError:
-        print(f"Error: File '{factors}' not found.")
-    except: Exception as e:
-        print(f"An error occured while processing the file: {e}")
-
-        return factorizations
-
-if __name__ == "__main__":
-    factors = "Documents/numbers.sys"
-    factorizations = factorize_numbers(factors)
-
-    for num, factors in factorizations:
-        factor_pairs = []
-        for i in range(0, len(factors), 2):
-            if i + 1 < len(factors):
-                factor_pairs.append(f"{factors[i]}*{factors[i+1]}")
-            else:
-                facror_pairs.append(f"{factors[i]}")
-                factorization_str = f"{num}={'*'.join(factor_pairs)}"
-                print(factorization_str)
-
+# autostart
+factors()
